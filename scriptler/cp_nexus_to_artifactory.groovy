@@ -7,6 +7,22 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type
 import static groovy.io.FileType.FILES
 import groovy.lang.Binding
 
+String rootpom_path = args[0]
+String dryrun = args[1]
+String regex = args[2]
+String whereToDownload = args[3]
+
+String old_repo_url = args[4]
+String username = args[5]
+String password = args[6]
+
+String new_repo_url = args[7]
+String username2 = args[8]
+String password2 = args[9]
+
+String download = args[10]
+String upload = args[11]
+
 boolean bDownload = Boolean.parseBoolean(download)
 boolean bUpload = Boolean.parseBoolean(upload)
 
