@@ -7,25 +7,6 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type
 import static groovy.io.FileType.FILES
 import groovy.lang.Binding
 
-/*
-//for local testpurposes
-String rootpom_path = "/tmp/product/product/pom.xml"
-String dryrun = "false"
-String regex = "(.*tests.jar.*|.*sources.jar.*)"
-String whereToDownload = "/tmp/dwnld"
-
-String old_repo_url = "http://grzmvn01.infonova.at:8082/nexus/content/repositories/product-releases/"
-String username = "aprattes"
-String password = "aP2206Live1"
-
-String new_repo_url = "http://grzmvn02:8081/nexus/content/repositories/local-product-releases/"
-String username2 = "aprattes"
-String password2 = ""
-
-String download = "true"
-String upload = "false"
-*/
-
 boolean bDownload = Boolean.parseBoolean(download)
 boolean bUpload = Boolean.parseBoolean(upload)
 
