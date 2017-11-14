@@ -141,7 +141,7 @@ pomArr.each {
                 cmdArr.each { command ->
                     println "[INFO] execute: " + command
                     command = command.replace("\$password", password2).replace("\$username", username2)
-                    executeCommand(command, false)
+                    uploadToArtifactory(command)
                 }
             }
             else
@@ -153,6 +153,9 @@ pomArr.each {
     }
 }
 
+private uploadToArtifactory(command) {
+    executeCommand(command, false, true)
+}
 
 
 return "SUCCESS!"
@@ -179,7 +182,7 @@ def createwgetScriptandRunIt(
             cmd = cmd.replace("\$password", password).replace("\$username", username)
 
             try {
-                executeCommand(cmd, true)
+                downloadFromNexus(cmd)
             }
             catch (Exception e) {
                 println("[ERROR] couldn't download artifact with: " + cmd.replace(password, "*******"))
@@ -193,6 +196,10 @@ def createwgetScriptandRunIt(
         throw new Exception("[ERROR] while downloading artifacts.\n[ERROR] read logfile!!")
     }
 
+}
+
+private downloadFromNexus(String cmd) {
+    executeCommand(cmd, true, false)
 }
 
 def sayhallo(File downloadPath, String regex, String old_repo_URL, String newNexusRepo, String user, String password)
@@ -301,7 +308,7 @@ def void printPomAndSubmodules(def pom, def deep) {
     }
 }
 
-def executeCommand(def cmd, boolean nexus) {
+def executeCommand(def cmd, boolean nexus, boolean upload) {
     def stdout = new StringBuffer()
     def stderr = new StringBuffer()
 
@@ -317,7 +324,11 @@ def executeCommand(def cmd, boolean nexus) {
     println "[INFO] out: " + newout.last()
 
     if(nexus) {
-        if (!("${stdout}").isEmpty()) {
+        if (!stdout.empty) {
+            throw new Exception("An Error occured while donwloading a Artifact, read stdout!")
+        }
+    } else {
+        if (upload && !stdout.contains("201 Created")) {
             throw new Exception("An Error occured while donwloading a Artifact, read stdout!")
         }
     }
